@@ -6,20 +6,21 @@ import (
 	"github.com/jinzhu/gorm"
 )
 
-// UserRepository repository for user
-type UserRepository struct {
+// UsersRepository repository for user
+type UsersRepository struct {
 	Db *gorm.DB
 }
 
 // Provide constructor
 func Provide(Db *gorm.DB) interfaces.IUsers {
-	return &UserRepository{
+	return &UsersRepository{
 		Db: Db,
 	}
 }
 
 // GetUserByUsername is getname
-func (u *UserRepository) GetUserByUsername(username string) (user models.Users, err error) {
+func (u *UsersRepository) GetUserByUsername(username string) (user models.Users, err error) {
+
 	err = u.Db.Table("users").Where("username = ?", username).First(&user).Error
 	return
 }

@@ -46,14 +46,15 @@ func TestInitUserRepository(t *testing.T) {
 	suite.Run(t, new(Suite))
 }
 
-func (s *Suite) TestGetName() {
+func (s *Suite) TestGetUser() {
 	expected := models.Users{
+		ID:       1,
 		Name:     "abc",
 		Username: "def",
 	}
 	row := sqlmock.
-		NewRows([]string{"username", "name"}).
-		AddRow(expected.Username, expected.Name)
+		NewRows([]string{"id", "username", "name"}).
+		AddRow(expected.ID, expected.Username, expected.Name)
 
 	sqlContent := "SELECT * FROM `users` WHERE  ((username = ?))"
 	s.mock.
@@ -63,7 +64,7 @@ func (s *Suite) TestGetName() {
 
 	res, err := s.repo.GetUserByUsername(expected.Username)
 
-	s.T().Logf("Expected! %v", res)
+	// s.T().Logf("Expected! %v", res)
 
 	require.Error(s.T(), err, nil)
 	assert.Equal(s.T(), expected, res)
