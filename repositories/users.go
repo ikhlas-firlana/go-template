@@ -2,6 +2,7 @@ package repositories
 
 import (
 	"github.com/ikhlas-firlana/go-template/interfaces"
+	"github.com/ikhlas-firlana/go-template/models"
 	"github.com/jinzhu/gorm"
 )
 
@@ -17,8 +18,8 @@ func Provide(Db *gorm.DB) interfaces.IUsers {
 	}
 }
 
-// GetName is getname
-func (u *UserRepository) GetName(username string) (name string, err error) {
-	err = u.Db.Table("users").Where("username = ?", username).First(&name).Error
+// GetUserByUsername is getname
+func (u *UserRepository) GetUserByUsername(username string) (user models.Users, err error) {
+	err = u.Db.Table("users").Where("username = ?", username).First(&user).Error
 	return
 }
